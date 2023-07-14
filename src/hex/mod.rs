@@ -1,4 +1,14 @@
 #![allow(clippy::inline_always)]
+
+use std::cmp::{max, min};
+
+use glam::{IVec2, IVec3, Vec2};
+
+pub(crate) use iter::ExactSizeHexIterator;
+pub use iter::HexIterExt;
+
+use crate::{DiagonalDirection, Direction, DirectionWay};
+
 /// Type conversions
 mod convert;
 /// Traits implementations
@@ -11,13 +21,6 @@ mod rings;
 mod siwzzle;
 #[cfg(test)]
 mod tests;
-
-pub(crate) use iter::ExactSizeHexIterator;
-pub use iter::HexIterExt;
-
-use crate::{DiagonalDirection, Direction, DirectionWay};
-use glam::{IVec2, IVec3, Vec2};
-use std::cmp::{max, min};
 
 /// Hexagonal [axial] coordinates
 ///
@@ -51,6 +54,7 @@ use std::cmp::{max, min};
     feature = "bevy_reflect",
     derive(bevy_reflect::Reflect, bevy_reflect::FromReflect)
 )]
+#[cfg_attr(feature = "bevy_reflect", reflect(Hash))]
 pub struct Hex {
     /// `x` axial coordinate (sometimes called `q` or `i`)
     pub x: i32,
